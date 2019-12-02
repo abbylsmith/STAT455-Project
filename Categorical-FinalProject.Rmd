@@ -2,13 +2,30 @@
 title: "Final Project; Categorical Data Analysis"
 author: "Abby Smith, Miruna B., Martha Eichlersmith"
 date: "11/10/2019"
-output:
-  html_document:
-    df_print: paged
-  pdf_document: default
+output: 
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+header-includes:
+- \usepackage{color}
+- \usepackage{mathtools}
+- \usepackage{bbm} #for mathbb for numbers
+- \usepackage{amsbsy}
+#- \usepackage{caption}
+#- \usepackage{booktabs}
+- \usepackage{geometry}
+#- \usepackage{float} #to hold things in place
+- \usepackage{lastpage}
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \floatplacement{figure}{H}
+- \fancyhf{}
+- \fancyhead[LE,LO]{STAT 455 Fall 2019 \\ Final Project}
+- \fancyhead[RE,RO]{Abby, Miruna, Martha \\ Page \thepage\ of\ \pageref*{LastPage}}
+geometry: left=0.75in,right=0.75in,top=1.1in,bottom=1in
 ---
 
-```{r include=F}
+```{r setup, include=F}
 knitr::opts_chunk$set(echo=F, message=F, warning=F)
 
 require(tidyverse)
@@ -19,21 +36,38 @@ require(sf)
 require(raster)
 require(Rcapture)
 require(dga)
+require(rgeos)
+library(bookdown) #for fig captions
+library(kableExtra)
+
+knitr::opts_chunk$set(fig.width = 10, fig.height = 4)
+knitr::opts_chunk$set(echo=FALSE)
+knitr::opts_chunk$set(fig.pos='H')
 
 ```
 
-## Introduction: Estimates of Killing in Casanare
 
-Casanare is a large, rural  state in Colombia that includes 19 municipalities and a population of almost 300,000 inhabitants. Located in the foothills of the Andes, Casanare has a history of violence. Multiple armed groups have operated in Casanare including paramilitaries, guerillas and the Colombian military. Many Casanare citizens have suffered violent deaths and disappearances.
+# Estimates of Killing in Casanare
+
+Casanare is a large, rural  state in Colombia that includes 19 municipalities and a population of almost 300,000 inhabitants. Located in the foothills of the Andes, Casanare has a history of violence. Multiple armed groups have operated in Casanare including paramilitaries, guerillas and the Colombian military. Many Casanare citizens have suffered violent deaths and disappearances.  
 
 But *how many* people have been killed or disappeared? We review the Human Rights Data Analysis Group (HRDAG)'s reporting on this work. In this study, the authors used information about victims of killings and disappearances provided by 15 datasets. The datasets come from state agencies – including government, security, forensic and judicial bodies – and from civil society organizations. Across these 15 datasets, there are individuals that have been "captured" only by one dataset, and some that have been captured by multiple. How can we disambguiate the patterns of violence?
 
-## Review of Multiple Systems Estimation (Capture-recapture)
-
-![](mse_review.png) need to cite this
+# Multiple Systems Estimation (MSE), Capture Re-Capture 
 
 MSE estimates the total number of disappearances by comparing the size of the overlap(s) between lists to the sizes of the lists themselves. If the overlap is small, this implies that the population from which the lists were drawn is much larger than the lists. If, on the other hand, most of the cases on the lists overlap, this implies that the overall population is not much larger than the number of cases listed.
 
+
+```{r img.MSE, fig.height=3, fig.cap="Multiple System Estimation"}
+library(png)
+library(grid)
+img <- readPNG("mse_review.png")
+ grid.raster(img)
+#![](mse_review.png) need to cite this
+```
+
+
+## MSE Assumptions 
 
 There are several MSE assumptions that are need for when there are two "systems" (lists), but not more than that. The assumptions are: 
 
@@ -47,12 +81,10 @@ There are several MSE assumptions that are need for when there are two "systems"
 
 Like differences in capture probability, dependences between systems are impossible to account for in the the two-system setting. A common example here is the difference between governmental and non-governmental organizations. Because different populations may have different levels of trust in the two organizations, reporting to one type of organization may imply that the witness is very unlikely to report to the other. 
 
-## Overview of Data : EDA
+# Overview of Data 
 
 ```{r data-sources}
 casanare<- read_delim('summary-table.csv', delim= "|")
-
-
 
 casanare_capture_recapture <- casanare %>%
   dplyr::select(-c(vln, muni, year)) #just want a matrix of 0s and 1s 
@@ -67,7 +99,7 @@ return_1 <-function(x) {
 
 }
 
-unlist(map(cols_lists, return_1))
+#unlist(map(cols_lists, return_1))
 
 unique_records<- casanare_capture_recapture %>%
   mutate(sum_cols = reduce(dplyr::select(., starts_with("d_")), `+`)) %>% 
@@ -90,12 +122,15 @@ contigency_table<-data.frame(org = org_names,
                     "civil","civil", "security","forensic", "judicial", "civil", "judicial",
                     "forensic", "security", "civil")) #just hard coded whoops
 
-colnames <- c("Organization", "Total Captures", "Unique", "Type")
+colnames(contigency_table) <- c("Organization", "Total Captures", "Unique", "Type")
 
-knitr::kable(contigency_table)
+knitr::kable(contigency_table, format="latex", booktabs=T, caption="Contingency Table") %>% 
+  kableExtra::kable_styling(latex_options="scale_down") %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 
 ```
 
+## Different Datasets - Different Stories 
 
 We motivate our need for a more sophisticated analysis by showing the reporting patterns of 3 different organizations across 1998-2007. If we relied on just one organization or even a combination of two we could tell differnt stories regarding the violence. Relying on FAM shows a peak in violent incidents in 2003, while reports by IMLM show a peak in 2004 . Using multiple systems estimation allows us to parse both the reported and unreported violent in Casanare.
 
@@ -107,17 +142,23 @@ casanare_wide <-  gather(casanare, key = "data_lists", value= 'Freq', gather_col
   group_by(data_lists,year) %>% summarise(n = sum(Freq))
                                                                                       
 
-ggplot(casanare_wide, aes(x= factor(year), y= as.integer(n), fill = as.factor(data_lists)))+
+motivation.plot <- ggplot(casanare_wide, aes(x= factor(year), y= as.integer(n), fill = as.factor(data_lists)))+
   geom_bar(stat='identity', position='dodge') + xlab("Year") + ylab("Reported Disappearances/Deaths") +
   ggtitle('Reported Disappearances/Deaths in Casanare') +
   guides(fill = guide_legend(title='Lists'))  + 
   theme_bw()
-
 ```
 
+```{r, fig.height=3, fig.cap= 'Count Trends for Three Organizations'}
+motivation.plot 
+```
 
+## Heterogenity  
 From the bottom graph of our heterogenity graph, we see differences in the capture probabilities across lists. 
 
+$\textcolor{red}{\text{NEED MORE DESCRIPTION}}$  
+  - this all the lists for all years??
+  - need more info on this graph 
 
 ```{r mapping-whole-country}
 #group deaths by municipality
@@ -141,6 +182,14 @@ casanare_overall_plot
     
 ```
 
+## Total Reported Victims Trends  
+
+We can see that the *reported* violence appears to have intensified across all municipalities in Casanare in 2003-2004 and then dropped.
+
+$\textcolor{red}{\text{NEED MORE DESCRIPTION}}$
+ - is this one list? 
+ - all the lists together 
+
 ```{r mapping-by-muni}
 #partition by years
 #group deaths by municipality
@@ -163,56 +212,87 @@ casanare_by_years <- ggplot(casanare_dat_with_years, aes(fill = count)) +scale_f
 casanare_by_years
 ```
 
-We can see that the *reported* violence appears to have intensified across all municipalities in Casanare in 2003-2004 and then dropped. 
+ 
 
 
-## Loglinear Modelling 
+# Loglinear Modelling 
 
-Our estimates are primarily based on Poisson regression. As we describe the model, for convenience’s sake, let’s say we’re dealing with three lists: 1, 2, and 3. Obviously for our case we deal with nearly 15 lists, the model gets very complex. We actually end up fitting a model with 4 systems, but for the sake of simplicity 
+We will describe the model as if we had two datasets (for simplicity).  We know the victims "captured" by only dataset 1, only dataset 2, and both datasets.  However, we don't know the amount of victims that are not captured by either list.  Estimate this value allows us to estimate the total count of victims.  
 
-Let’s further say that the number of violent incidents selected into a list or combination of lists is $m_{100}$,  $m_{010}$, $m_{001}$,$m_{110}$, $m_{101}$, $m_{001}$, and $m_{111}$.
+```{r img.example, fig.height=3,echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("2datasetexample.png")
+ grid.raster(img)
+```
 
-Each of these cells is a count of cases. For example, $m_{100}$,is the number of cases in only list 1; $m_{110}$, is the number of cases that appear in lists 1 and 2, but not list 3—and so on.
 
-The $m$‘s are called cell counts (as in a contingency table **DRAW CONTIGENCY TABLE HERE** ), and Poisson regression treats these cell counts—not the underlying individual cases data. The (log of the) expected cell count $m_{100}$ is a function of the other observed cell counts, as shown in the equation below.
+```{r}
+#As we describe the model, for convenience’s sake, let’s say we’re dealing with three lists: 1, 2, and 3. Obviously for our case we deal with nearly 15 lists, the model gets very complex. We actually end up fitting a model with 4 systems, but for the sake of simplicity 
+```
 
-$$\log(m_{000}) = a + \beta_1(m_{100}) + \beta_2(m{010}) + \beta_3(m_{001}) + \beta_{12}(m_{110}) + \beta_{13}(m_{101}) + \beta_{23}(m_{011})$$
+
+The count of victims captured into a dataset or combindation of datasets is $n_{11}, n_{10}, n_{01}$, and $n_{00}$.  Each of these cells is a count of victims captured. The subscripts denote which datasets a victim has been captured.  The subscripts denotes if the victim has been captured (1), or not been captured by a certain data set.  For $n_{ij}$, $i$ is for dataset #1 and $j$ is dataset #2.  
+
+Our estimates are primarily based on Poisson regression.  Poisson regression treaets these cell counts - not the underlying individual cases data  
+
+## Estimating the Total Count of Victims 
+
+We are interested in estimating $n_{00}$, which also allows us to estimate the total number of victims.  
+The (log of the) expected cell count $n_{00}$ is a function of the other observed cell counts, as shown in the equation below.
+
+$$
+\log(n_{00}) = \alpha 
++ \beta_1 \cdot \mathbbm{1}(x\in n_{10}) 
++ \beta_2 \cdot \mathbbm{1}(x\in n_{01}) 
+$$
 
 This is the saturated form of the log-linear models introduced in Bishop, Fienberg and Holland (1975). To quote from Agresti, "the saturated GLM has a separate parameter for each observation. It gives a perfect fit. This sounds good, but it is not a helpful model. It does not smooth the data or have the advantages that a simpler model has, such as parsimony. Nonetheless, it serves as a baseline for other models, such as for checking model fit."
 
-When estimation of the total “population” of missing people in Casanare is the goal (as it typically is with multiple-systems estimation), the key value here is the intercept $a$. To estimate $\log(m_{000}$), all the other $m$ values are zero. Therefore the only term that contributes to the estimate of $\log(m_{000}$) is a. The value of $m_{000}$ is therefore the exponentiated value of $a$, that is, $\exp(a)$. The total number of cases is the sum of the observed cases (that is, the seven values of $m$) plus $\exp(a)$.
+When estimation of the total “population” of missing people in Casanare is the goal (as it typically is with multiple-systems estimation), the key value here is the intercept $\alpha$. To estimate $\log(n_{00}$), all the other values in the model are zero, as the indicator functions for $n_{ij}$ for zero. Therefore the only term that contributes to the estimate of $\log(n_{00}$) is $\alpha$. The value of $n_{00}$ is therefore the exponentiated value of $a$, that is, $\exp(\alpha)$. The total number of cases, $N$, is the sum of the observed cases plus $\exp(\alpha)$.  
+
+$$
+\begin{aligned}
+\log(n_{00}) &= \alpha 
+\underbrace{
++ \beta_1 \cdot  \mathbbm{1}(x\in n_{10}) 
++ \beta_2 \cdot \mathbbm{1}(x\in n_{01}) 
+}_{\text{each }=0}
+\\[.5ex]
+\log(n_{00}) & = \alpha 
+\\[.5ex]
+\hat{n}_{00} & = \exp \left\{ \hat{\alpha} \right\}
+\\[3ex]
+\hat{N} &= n_{11} + n_{10} + n_{01} + \hat{n}_{00}
+\end{aligned}
+$$
 
 As with any regression and data mining model, we want to avoid overfitting. There is a tradeoff we need to balance between "goodness of fit", and simple (parsimonious) models.
 
-We need to find the best model in order to get an accurate estimate of $a$. Thus, we should determine whether the full (saturated) model above, which assumes that all three two-way interactions between datasets are important, is actually necessary. There are three simpler models that assume only one two-way interaction.
+We need to find the best model in order to get an accurate estimate of $\alpha$. Thus, we should determine whether the full (saturated) model above, which assumes that all three two-way interactions between datasets are important, is actually necessary. There is one simpler models that assume the two-way interaction.
 
-$$\log(m_{000}) = a + \beta_1(m_{100}) + \beta_2(m_{010}) + \beta_3(m_{001}) + \beta_{12}(m_{110})$$
+$$
+\log(n_{00}) = \alpha 
++ \beta_1 \cdot \mathbbm{1}(x\in n_{10}) 
++ \beta_2 \cdot \mathbbm{1}(x\in n_{01}) 
++ \beta_{12} \cdot \mathbbm{1}(x \in n_{11})
+$$
 
-$$\log(m_{000}) = a + \beta_1(m_{100}) + \beta_2(m_{010}) + \beta_3(m_{001}) + \beta_{13}(m_{101})$$
 
-$$\log(m_{000}) = a + \beta_1(m_{100}) + \beta_2(m_{010}) + \beta_3(m_{001}) + \beta_{23}(m_{011})$$
 
-$$\log \left(m_{000}\right)=a+\beta_{1}\left(m_{100}\right)+\beta_{2}\left(m_{010}\right)+\beta_{3}\left(m_{001}\right)+\beta_{12}\left(m_{110}\right)+\beta_{13}\left(m_{101}\right)$$ 
-
-$$\log \left(m_{000}\right)=a+\beta_{1}\left(m_{100}\right)+\beta_{2}\left(m_{010}\right)+\beta_{3}\left(m_{001}\right)+\beta_{12}\left(m_{110}\right)+\beta_{23}\left(m_{011}\right)$$
-
-$$\log \left(m_{000}\right)=a+\beta_{1}\left(m_{100}\right)+\beta_{2}\left(m_{010}\right)+\beta_{3}\left(m_{001}\right)+\beta_{13}\left(m_{101}\right)+\beta_{23}\left(m_{011}\right)$$
-
-In this case, we can clearly write out the seven possible models, when we model selection into three datasets, we estimate all seven of these, and choose the model that minimizes the Bayesian Information Criterion (BIC), a test that weighs goodness of fit against degrees of freedom.
+In this case, we can clearly write out the possible model.  During model selection, we estimate these models and choose the model that minimizes the Bayesian Information Criterion (BIC), a test that weighs goodness of fit against degrees of freedom.
 
 
 ## Challenges with Loglinear models
 
-* Interpretation: The inclusion of so many variables in loglinear models often makes interpretation very difficult.
-
-* Independence: The frequency in each cell is independent of frequencies in all other cells, which is not necessarily the case here. We attempt to model this. 
-
-* Adequate Sample Size: With loglinear models, you need to have at least 5 times the number of cases as cells in your data.  For example, if you have a 2x2x3 table, then you need to have 60 cases.  If you do not have the required amount of cases, then you need to increase the sample size or eliminate one or more of the variables.
+1.  **Interpretation:** The inclusion of so many variables in loglinear models often makes interpretation very difficult.  
+2. **Independence Assumption:** The frequency in each cell is independent of frequencies in all other cells, which is not necessarily the case here. We attempt to model this.  
+3. **Sample Size Requirement:** With loglinear models, you need to have at least 5 times the number of cases as cells in your data.  If you do not have the required amount of cases, then you need to increase the sample size or eliminate one or more of the variables.
 
 
 ## Choosing our "Systems"
 
-Our dataset encompasses 15 lists, far too many to model with a loglinear model. We collapse our 15 lists into 4 systems, 
+Our dataset encompasses 15 datasets, far too many to model with a loglinear model. We collapse these 15 datasets into 4 systems (i.e. groups) based on the type of organization that produced the dataset.   
 
 ```{r adding-systems}
 
@@ -229,7 +309,7 @@ cap_indicators<- casanare_capture_recapture  %>% #could have used fct_collapse()
          )  %>%
   dplyr::select(-Freq, Freq) # move Freq to last column for closedp() function
 
-head(cap_indicators %>% dplyr::select(security_ind, forensic_ind, judicial_ind, civil_ind, Freq))
+table.system <- head(cap_indicators %>% dplyr::select(security_ind, forensic_ind, judicial_ind, civil_ind, Freq))
 
 for_venn <- cap_indicators[,c(16:20)] %>% 
   group_by(security_ind, forensic_ind, judicial_ind, civil_ind) %>%
@@ -242,7 +322,7 @@ dga::venn4(c(2000,for_venn$new_Freq),num.test.points = 100000, main='Overlap of 
 ```
 
 
-## Results of Loglinear Modelling
+# Results of Loglinear Modelling
 
 After collapsing the 15 lists into four systems, we fit several loglinear models. We see that the best fits clearly take into account both system and individual heterogeneity. We therefore choose the $M_{th}$ model with the log odds of capture among those who were not captured follows a Gamma distribution. We see that the $M_0$ model demonstrates a clear lack of fit, which we would expect for this data. The models listed below are *not* hierchachal in nature. 
 
@@ -278,7 +358,7 @@ desc
 plot(desc)
 ```
 
-$$\log(\frac{f_i}{t \choose i}) = \log (\frac{N \times P(i \text{ captures})}{t \choose i}) = \log(N(1-p)^{t-i} p^i = \log(N(1-p)^t) + i\log(\frac{p}{1-p})$$
+$$\log(\frac{f_i}{{t \choose i}}) = \log (\frac{N \times P(i \text{ captures})}{{t \choose i}}) = \log(N(1-p)^{t-i} p^i = \log(N(1-p)^t) + i\log(\frac{p}{1-p})$$
 
 $M_0$: The $M_0$ model is the simplest possible multiple source capture recapture model. It assumes that there is no heterogeneity and that all lists (civil, security, judicial, etc) have the same probability of capturing individuals. We know that this is not the case here. 
 
@@ -330,13 +410,13 @@ Note that these the hierch. models have different estimates ,ranging from 5231 t
 
 This is the fundamental problem of the frequentist approach. We could just pick the “best” model, i.e., the one with the lowest BIC. Unfortunately, just picking one model ignores the error that we introduce by the selection itself. It also forces us to decide which dependencies among the systems we will control for, forcing us to decide which dependencies will not be included in the model.
 
-## Goodness of Fit
+# Goodness of Fit
 
 I will describe here how likelihood ratio test is better for model comparison than Pearson's Chi-square??
 
 
 
-## Bayesian Model Averaging (??)
+# Bayesian Model Averaging (??)
 
 This method allows the analyst to flexibly account for list dependency by creating models for all possible dependencies, and averaging over them in a way that is proportional to the probability that the dependence is correct.
 
@@ -346,4 +426,4 @@ The first step in the analysis is to formulate a prior for population size. This
 
 ```
 
-## Conclusions
+# Conclusions
