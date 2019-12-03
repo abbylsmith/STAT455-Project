@@ -6,7 +6,7 @@ output:
   pdf_document:
     fig_caption: yes
     number_sections: yes
-header-includes:
+header-includes: 
 - \usepackage{color}
 - \usepackage{mathtools}
 - \usepackage{bbm} #for mathbb for numbers
@@ -149,18 +149,22 @@ motivation.plot <- ggplot(casanare_wide, aes(x= factor(year), y= as.integer(n), 
   theme_bw()
 ```
 
-```{r, fig.height=3, fig.cap= 'Count Trends for Three Organizations'}
+```{r, fig.cap= 'Count Trends for Three Organizations'}
 motivation.plot 
 ```
 
-## Heterogenity  
+## Counts by Municipality 
+
+### Heterogenity  
 From the bottom graph of our heterogenity graph, we see differences in the capture probabilities across lists. 
 
 $\textcolor{red}{\text{NEED MORE DESCRIPTION}}$  
-  - this all the lists for all years??
-  - need more info on this graph 
+  
+- this all the lists for all years??
+- need more info on this graph  
+- are the lists focused in geographically areas? if not I don't see how this affects capture probabilities 
 
-```{r mapping-whole-country}
+```{r mapping-whole-country, fig.cap="Total counts by Municipality 1998-2007"}
 #group deaths by municipality
 muni <- casanare %>% mutate(name_2= str_to_title(muni)) %>%group_by(name_2)  %>% summarise(count = sum(Freq))
 
@@ -182,15 +186,16 @@ casanare_overall_plot
     
 ```
 
-## Total Reported Victims Trends  
+### Total Reported Victims Trends  
 
 We can see that the *reported* violence appears to have intensified across all municipalities in Casanare in 2003-2004 and then dropped.
 
 $\textcolor{red}{\text{NEED MORE DESCRIPTION}}$
- - is this one list? 
- - all the lists together 
+  
+- is this one list? 
+- all the lists together 
 
-```{r mapping-by-muni}
+```{r mapping-by-muni, fig.cap= 'Yearly Counts by Municipality 1998-2007'}
 #partition by years
 #group deaths by municipality
 muni_by_year<- casanare %>% mutate(name_2 = str_to_title(muni)) %>%
@@ -225,12 +230,6 @@ library(grid)
 img <- readPNG("2datasetexample.png")
  grid.raster(img)
 ```
-
-
-```{r}
-#As we describe the model, for convenience’s sake, let’s say we’re dealing with three lists: 1, 2, and 3. Obviously for our case we deal with nearly 15 lists, the model gets very complex. We actually end up fitting a model with 4 systems, but for the sake of simplicity 
-```
-
 
 The count of victims captured into a dataset or combindation of datasets is $n_{11}, n_{10}, n_{01}$, and $n_{00}$.  Each of these cells is a count of victims captured. The subscripts denote which datasets a victim has been captured.  The subscripts denotes if the victim has been captured (1), or not been captured by a certain data set.  For $n_{ij}$, $i$ is for dataset #1 and $j$ is dataset #2.  
 
@@ -295,7 +294,6 @@ In this case, we can clearly write out the possible model.  During model selecti
 Our dataset encompasses 15 datasets, far too many to model with a loglinear model. We collapse these 15 datasets into 4 systems (i.e. groups) based on the type of organization that produced the dataset.   
 
 ```{r adding-systems}
-
 #want to count how many records are in just one of these (or both) of these lists vs. these + another system
 cap_indicators<- casanare_capture_recapture  %>% #could have used fct_collapse() here
   mutate(security_ind = case_when((d_GAU == 1 | d_FON == 1 | d_PN0==1) ~ 1,
@@ -311,22 +309,47 @@ cap_indicators<- casanare_capture_recapture  %>% #could have used fct_collapse()
 
 table.system <- head(cap_indicators %>% dplyr::select(security_ind, forensic_ind, judicial_ind, civil_ind, Freq))
 
-for_venn <- cap_indicators[,c(16:20)] %>% 
-  group_by(security_ind, forensic_ind, judicial_ind, civil_ind) %>%
-   summarise(new_Freq = sum(Freq))
-
-dga::venn4(c(2000,for_venn$new_Freq),num.test.points = 100000, main='Overlap of Security, Forensic, Judicial and Civil lists') #rough diagram of overlap
-
-
+knitr::kable(table.system, format="latex", booktabs=T, caption="Example of Information from Systems") %>% 
+  #kableExtra::kable_styling(latex_options="scale_down") %>% for if the table is too large
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 
 ```
 
+```{r systems.venndiagram, fig.height=6, fig.cap="Estimated Venn Diagram of Systems"}
+for_venn <- cap_indicators[,c(16:20)] %>% 
+  group_by(security_ind, forensic_ind, judicial_ind, civil_ind) %>%
+   summarise(new_Freq = sum(Freq))
+dga::venn4(c(2000,for_venn$new_Freq),num.test.points = 100000, main='Overlap of Security, Forensic, Judicial and Civil lists') #rough diagram of overlap
+```
 
-# Results of Loglinear Modelling
+## Model Definitions  
+
+### Types of Models  
+
+Models will be donoted by $M$, and the subscripts will denote the type of model. 
+
+* $M_0$: The $M_0$ model is the simplest possible multiple source capture recapture model. It assumes that there is no heterogeneity and that all lists (civil, security, judicial, etc) have the same probability of capturing individuals. We know that this is not the case here.
+* $M_t$: This model relaxes the $M_0$ model to allow for lists to have different capture rates.
+* $M_h$: This model relaxes the $M_0$ model to allow for individual capture heterogeneity.
+* $M_{th}$: This model allows for both list heterogeneity and capture events having different rates.
+
+### Types of Heterogeniety 
+
+When heterogeneity is present, there are different forms that this heterogeneity can take. 
+
+* Normal: The log odds of capture follows a Normal distribution.
+* Darroch: The log odds of capture among those who were not captured follows a Normal distribution.
+* Poisson: The log odds of capture among those who were not captured follows a Poisson distribution.
+* Gamma: The log odds of capture among those who were not captured follows a Gamma distribution.
+
+
+## Non-Hierarchical Models
 
 After collapsing the 15 lists into four systems, we fit several loglinear models. We see that the best fits clearly take into account both system and individual heterogeneity. We therefore choose the $M_{th}$ model with the log odds of capture among those who were not captured follows a Gamma distribution. We see that the $M_0$ model demonstrates a clear lack of fit, which we would expect for this data. The models listed below are *not* hierchachal in nature. 
 
-We will need the hierchachal structure to perform model selection. It’s important to note that a model is not chosen if it bears no resemblance to the observed data.  The choice of a preferred model is typically based on a formal comparison of goodness-of-fit statistics associated with models that are related hierarchically (models containing higher order terms also implicitly include all lower order terms).  Ultimately, the preferred model should distinguish between the pattern of the variables in the data and sampling variability, thus providing an intuitive interpretation. 
+We will need the hierchachal structure to perform model selection. It’s important to note that a model is not chosen if it bears no resemblance to the observed data.  The choice of a preferred model is typically based on a formal comparison of goodness-of-fit statistics associated with models that are related hierarchically (models containing higher order terms also implicitly include all lower order terms).  Ultimately, the preferred model should distinguish between the pattern of the variables in the data and sampling variability, thus providing an intuitive interpretation.  
+
+The “number of captured units” is the number of observed elements, in this example, the number of people documented as missing/killed, we usually call this $N_c$ ($N$ for overall total, and $c$ denoting caputred. The “abundance” column shows the estimate of $\hat{N}$, the total population including the observed and the estimated unobserved deaths. The AIC and BIC columns show the “information coefficients” which balance the goodness of fit (shown in the “deviance” column) with the information used to estimate the model (degrees of freedom indicate this).
 
 ```{r NOT-HIERCH-models}
 test <- cap_indicators[,c(16:20)] %>% 
@@ -335,73 +358,84 @@ test <- cap_indicators[,c(16:20)] %>%
 
 
 loglinear_models <- closedp.t(test, dfreq=T)
-print(loglinear_models)
-boxplot(loglinear_models) #residuals for heterogen.
+NonHierchModels <- loglinear_models$results
 
-
-#profile likelihood CI 
-profileCI(test,dfreq=T, m = "Mth", h = "Darroch", a=2)
+#table.logmodels <- as.data.frame(loglinear_models)
+knitr::kable(NonHierchModels, format="latex", booktabs=T, caption="Summary of Models (Non-hierarchical models)") %>% 
+  kableExtra::kable_styling(latex_options="scale_down") %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 
 ```
-
-
-The “number of captured units” is the number of observed elements, in this example, the number of people documented as missing/killed, we usually call this $N_k$. The “abundance” column shows the estimate of $\hat{N_k}$, the total population including the observed and the estimated unobserved deaths. The AIC and BIC columns show the “information coefficients” which balance the goodness of fit (shown in the “deviance” column) with the information used to estimate the model (degrees of freedom indicate this).
 
 Each model controls for a subset of all the possible interactions among the models. In the context of MSE, the two- and three-way interactions estimate (and to some extent, control for) associations in the probabilities of capture between (and among) the lists. For example, is a certain person more likely to be seen on one list, and also more likely to be seen on a second list? If associations like this are present (and they usually are), they can bias the estimate.
 
 
+```{r NOT-HIERCH-models-boxplot, fig.cap="Boxplot of Residuals for Models"}
+boxplot(loglinear_models) #residuals for heterogen.
+```
+
+## Specific Model Results 
+
+```{r modelProfileLike, fig.cap='Profile Likelihood of Specific Model'}
+profilelike <- profileCI(test,dfreq=T, m = "Mth", h = "Darroch", a=2) #profile likelihood CI
+```
+
+```{r modelProfileLikeCI}
+knitr::kable(round(profilelike$results, 2), format="latex", booktabs=T, caption="Confidence Interval of Specific Model") %>% 
+  kableExtra::kable_styling(latex_options = "HOLD_position")
+```
+
+
+## Capture Recapture
+
 We display some basic capture-recapture frequency statistics to explore capture patterns. It displays, for $i= 1,...t$, the number of people captured $i$ times ($f_i$), the number of people captured for the first time on occasion $i$ ($u_i$), the number of units capturedfor the last time on occasion $i$ ($v_i$) and the number of units captured on occasion $i$ ($n_i$). If the $n_i$ statistics vary among capture occasions, there is a temporal effect-- which we clearly see here. We would expect the top panel of the plot to be linear, while the bottom panel should be concave down or exhibit no pattern for capture patterns that are best fit with $M_{th}$ models. 
 
-```{r descriptive-stats}
+```{r descriptive-stats, fig.height=8, fig.cap="Capture-Recapture Frequency Statistics"}
 desc<- descriptive(test, dfreq = T)
-desc
 plot(desc)
 ```
 
-$$\log(\frac{f_i}{{t \choose i}}) = \log (\frac{N \times P(i \text{ captures})}{{t \choose i}}) = \log(N(1-p)^{t-i} p^i = \log(N(1-p)^t) + i\log(\frac{p}{1-p})$$
-
-$M_0$: The $M_0$ model is the simplest possible multiple source capture recapture model. It assumes that there is no heterogeneity and that all lists (civil, security, judicial, etc) have the same probability of capturing individuals. We know that this is not the case here. 
-
-$M_t$: This model relaxes the $M_0$ model to allow for lists to have different capture rates.
-
-$M_h$: This model relaxes the $M_0$ model to allow for individual capture heterogeneity.
-
-$M_{th}$: This model allows for both list  heterogeneity and capture events having different rates. 
-
-When heterogeneity is present, there are different forms that this heterogeneity can take.
-
-* Normal: The log odds of capture follows a Normal distribution.
-* Darroch: The log odds of capture among those who were not captured follows a Normal distribution.
-* Poisson: The log odds of capture among those who were not captured follows a Poisson distribution.
-* Gamma: The log odds of capture among those who were not captured follows a Gamma distribution.
+$$\log\left(\frac{f_i}{{t \choose i}}\right) = \log \left(\frac{N \times P(i \text{ captures})}{{t \choose i}}\right) = \log(N(1-p)^{t-i} p^i = \log(N(1-p)^t) + i\log\left(\frac{p}{1-p}\right)$$
 
 
 
-
+## THIS SECTION NEEDS A HOME 
 
 The iterative proportional fitting process generates maximum likelihood estimates of the expected cell frequencies for a hierarchical model.  In short, preliminary estimates of the expected cell frequencies are successfully adjusted to fit each of the marginal sub-tables specified in the model.
 
-For example, in the model $list_1$, $list_{12}$, $list_{123}$, the initial estimates are adjusted to fit $list_{12}$ then $list_{23}$ and finally to equal the $list_{123}$, observed frequencies.  The previous adjustments become distorted with each new fit, so the process starts over again with the most recent cell estimate.  This process continues until an arbitrarily small difference exists between the current and previous estimates. 
+For example, in the model $list_1$, $list_{12}$, $list_{123}$, the initial estimates are adjusted to fit $list_{12}$ then $list_{23}$ and finally to equal the $list_{123}$, observed frequencies.  The previous adjustments become distorted with each new fit, so the process starts over again with the most recent cell estimate.  This process continues until an arbitrarily small difference exists between the current and previous estimates.  
 
+## Hierarchical Models: Choosing a Model 
 
 We fit hierchachal models, restricting to second-order (no three-way interactions) for sake of interpretation.The best model according to the BIC criteria, is below: estimates a total for missing/disappeared people as $8607$, which is similar to the  $8782$ than that of the non-hierch., interactionless, model. 
 
+$\textcolor{red}{\text{NEED MORE DESCRIPTION HERE}}$ 
+
 $$\log(\hat{N}) = \mu + \lambda_1 + \lambda_2 + \lambda_3 + \lambda_4 + \lambda_{12} + \lambda_{13} + \lambda_{24} + \lambda_{34}$$
-
-
-**NEED TO TALK ABOUT INTERPREATION, DESCRIBE NOTATION** 
-
-We also plot the BIC values for different models and their accompanying estimates of $\hat{N}$. 
-
-
 
 ```{r hierch-models}
 ##HERE: why is hierch. structure better? 
 hierch_models <- closedpMS.t(test, dfreq=T ,h='Poisson', maxorder = 2) #restrict to second order interactions 
-hierch_models 
-plot(hierch_models) #BIC for a bunch of different models 
+
+HierchModels <- hierch_models$results[1:10,]
+rnames <- rownames(HierchModels) 
+rownames(HierchModels)<- gsub("\\[|\\]", "", rnames)
+#get rid fo brackets otherwise booktabs goes all wonky
+
+knitr::kable(HierchModels, format="latex"
+             , booktabs=T
+             , caption="'Top' Ten Five Models (Hierarchical models)") %>% 
+  kableExtra::kable_styling(latex_options="scale_down") %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 
 ```
+
+
+We also plot the BIC values for different models and their accompanying estimates of $\hat{N}$.  
+```{r hierch-modelsBIC, fig.cap="Hiercharical Models BIC Plot"}
+plot(hierch_models) #BIC for a bunch of different models 
+```
+
 
 
 
@@ -415,15 +449,5 @@ This is the fundamental problem of the frequentist approach. We could just pick 
 I will describe here how likelihood ratio test is better for model comparison than Pearson's Chi-square??
 
 
-
-# Bayesian Model Averaging (??)
-
-This method allows the analyst to flexibly account for list dependency by creating models for all possible dependencies, and averaging over them in a way that is proportional to the probability that the dependence is correct.
-
-The first step in the analysis is to formulate a prior for population size. This is represents the analyst’s prior knowledge about population size along with uncertainty. By default, a “non-informative” prior is used.
-
-```{r}
-
-```
 
 # Conclusions

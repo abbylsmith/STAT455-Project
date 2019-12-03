@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.9.20)  1 DEC 2019 21:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.9.20)  2 DEC 2019 19:21
 entering extended mode
 **./Categorical-FinalProject.tex
 (Categorical-FinalProject.tex
@@ -976,7 +976,7 @@ G,.JBIG2,.JB2,.eps]
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
 (lastpage)             ! on input line 115.
-<Categorical-FinalProject_files/figure-latex/img.MSE-1.pdf, id=63, 722.7pt x 21
+<Categorical-FinalProject_files/figure-latex/img.MSE-1.pdf, id=91, 722.7pt x 21
 6.81pt>
 File: Categorical-FinalProject_files/figure-latex/img.MSE-1.pdf Graphic file (t
 ype pdf)
@@ -1049,14 +1049,14 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 t-msb.cfg"
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-<Categorical-FinalProject_files/figure-latex/unnamed-chunk-1-1.pdf, id=83, 722.
-7pt x 216.81pt>
+<Categorical-FinalProject_files/figure-latex/unnamed-chunk-1-1.pdf, id=111, 722
+.7pt x 289.08pt>
 File: Categorical-FinalProject_files/figure-latex/unnamed-chunk-1-1.pdf Graphic
  file (type pdf)
 <use Categorical-FinalProject_files/figure-latex/unnamed-chunk-1-1.pdf>
 Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/unnamed-ch
 unk-1-1.pdf  used on input line 251.
-(pdftex.def)             Requested size: 505.88655pt x 151.76596pt.
+(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 22.48878pt.
@@ -1070,21 +1070,24 @@ as been already used, duplicate ignored
                                                   \fi \fi 
 l.254 
       ]
-<Categorical-FinalProject_files/figure-latex/mapping-whole-country-1.pdf, id=94
-, 722.7pt x 289.08pt>
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 269.
+
+
+("C:\Users\MarEichler17\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lm\ts1lmr.f
+d"
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Underfull \hbox (badness 10000) in paragraph at lines 271--273
+
+ []
+
+<Categorical-FinalProject_files/figure-latex/mapping-whole-country-1.pdf, id=12
+2, 722.7pt x 289.08pt>
 File: Categorical-FinalProject_files/figure-latex/mapping-whole-country-1.pdf G
 raphic file (type pdf)
 <use Categorical-FinalProject_files/figure-latex/mapping-whole-country-1.pdf>
 Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/mapping-wh
-ole-country-1.pdf  used on input line 264.
-(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
-<Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf, id=95, 722.
-7pt x 289.08pt>
-File: Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf Graphic
- file (type pdf)
-<use Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf>
-Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/mapping-by
--muni-1.pdf  used on input line 276.
+ole-country-1.pdf  used on input line 279.
 (pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1097,48 +1100,61 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.279 ...ar Modelling}\label{loglinear-modelling}}
-                                                   <./Categorical-FinalProject_
-files/figure-latex/unnamed-chunk-1-1.pdf> <./Categorical-FinalProject_files/fig
-ure-latex/mapping-whole-country-1.pdf>]
-<Categorical-FinalProject_files/figure-latex/img.example-1.pdf, id=114, 722.7pt
+l.290 \(
+        \textcolor{red}{\text{NEED MORE DESCRIPTION}}\)pdfTeX warning (ext4): d
+estination with the same identifier (name{figure.3}) has been already used, dup
+licate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.290 \(
+        \textcolor{red}{\text{NEED MORE DESCRIPTION}}\) <./Categorical-FinalPro
+ject_files/figure-latex/unnamed-chunk-1-1.pdf> <./Categorical-FinalProject_file
+s/figure-latex/mapping-whole-country-1.pdf>]
+<Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf, id=145, 722
+.7pt x 289.08pt>
+File: Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf Graphic
+ file (type pdf)
+<use Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf>
+Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/mapping-by
+-muni-1.pdf  used on input line 302.
+(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
+<Categorical-FinalProject_files/figure-latex/img.example-1.pdf, id=146, 722.7pt
  x 216.81pt>
 File: Categorical-FinalProject_files/figure-latex/img.example-1.pdf Graphic fil
 e (type pdf)
 <use Categorical-FinalProject_files/figure-latex/img.example-1.pdf>
 Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/img.exampl
-e-1.pdf  used on input line 287.
+e-1.pdf  used on input line 315.
 (pdftex.def)             Requested size: 505.88655pt x 151.76596pt.
-LaTeX Font Info:    Try loading font information for U+bbm on input line 311.
-("C:\Users\MarEichler17\AppData\Local\Programs\MiKTeX 2.9\tex\latex\bbm\ubbm.fd
-"
-File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 22.48878pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[4 <./Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf> <./Cat
-egorical-FinalProject_files/figure-latex/img.example-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 379--382
+[4pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.327 
+       <./Categorical-FinalProject_files/figure-latex/mapping-by-muni-1.pdf> <.
+/Categorical-FinalProject_files/figure-latex/img.example-1.pdf>]
+LaTeX Font Info:    Try loading font information for U+bbm on input line 339.
+("C:\Users\MarEichler17\AppData\Local\Programs\MiKTeX 2.9\tex\latex\bbm\ubbm.fd
+"
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+)
+Underfull \hbox (badness 10000) in paragraph at lines 407--410
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 382--386
+Underfull \hbox (badness 10000) in paragraph at lines 410--414
 
  []
 
-<Categorical-FinalProject_files/figure-latex/adding-systems-1.pdf, id=139, 722.
-7pt x 289.08pt>
-File: Categorical-FinalProject_files/figure-latex/adding-systems-1.pdf Graphic 
-file (type pdf)
-<use Categorical-FinalProject_files/figure-latex/adding-systems-1.pdf>
-Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/adding-sys
-tems-1.pdf  used on input line 400.
-(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 22.48878pt.
@@ -1146,83 +1162,124 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 424.
-
-
-("C:\Users\MarEichler17\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lm\t1lmtt.f
-d"
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-<Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-1.pdf, id=152, 7
-22.7pt x 289.08pt>
-File: Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-1.pdf Graph
-ic file (type pdf)
-<use Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-1.pdf>
-Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/NOT-HIERCH
--models-1.pdf  used on input line 444.
-(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
-<Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-2.pdf, id=153, 7
-22.7pt x 289.08pt>
-File: Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-2.pdf Graph
-ic file (type pdf)
-<use Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-2.pdf>
-Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/NOT-HIERCH
--models-2.pdf  used on input line 445.
-(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 444--446
-[][]
- []
-
+<Categorical-FinalProject_files/figure-latex/systems.venndiagram-1.pdf, id=183,
+ 722.7pt x 433.62pt>
+File: Categorical-FinalProject_files/figure-latex/systems.venndiagram-1.pdf Gra
+phic file (type pdf)
+<use Categorical-FinalProject_files/figure-latex/systems.venndiagram-1.pdf>
+Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/systems.ve
+nndiagram-1.pdf  used on input line 449.
+(pdftex.def)             Requested size: 505.88655pt x 303.53192pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 22.48878pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[6 <./Categorical-FinalProject_files/figure-latex/adding-systems-1.pdf>]
+[6pdfTeX warning (ext4): destination with the same identifier (name{table.2}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.471   \(
+          M_t\): This model relaxes the \(M_0\) model to allow for lists topdfT
+eX warning (ext4): destination with the same identifier (name{figure.5}) has be
+en already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.471   \(
+          M_t\): This model relaxes the \(M_0\) model to allow for lists to <./
+Categorical-FinalProject_files/figure-latex/systems.venndiagram-1.pdf>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 22.48878pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[7 <./Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-1.pdf> <./C
-ategorical-FinalProject_files/figure-latex/NOT-HIERCH-models-2.pdf>]
-<Categorical-FinalProject_files/figure-latex/descriptive-stats-1.pdf, id=182, 7
-22.7pt x 289.08pt>
+[7pdfTeX warning (ext4): destination with the same identifier (name{table.3}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.567 
+      ]
+<Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-boxplot-1.pdf, i
+d=205, 722.7pt x 289.08pt>
+File: Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-boxplot-1.p
+df Graphic file (type pdf)
+<use Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-boxplot-1.pd
+f>
+Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/NOT-HIERCH
+-models-boxplot-1.pdf  used on input line 570.
+(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
+<Categorical-FinalProject_files/figure-latex/modelProfileLike-1.pdf, id=206, 72
+2.7pt x 289.08pt>
+File: Categorical-FinalProject_files/figure-latex/modelProfileLike-1.pdf Graphi
+c file (type pdf)
+<use Categorical-FinalProject_files/figure-latex/modelProfileLike-1.pdf>
+Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/modelProfi
+leLike-1.pdf  used on input line 579.
+(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 22.48878pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[8pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.609 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+7}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.609 
+      pdfTeX warning (ext4): destination with the same identifier (name{table.4
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.609 
+       <./Categorical-FinalProject_files/figure-latex/NOT-HIERCH-models-boxplot
+-1.pdf> <./Categorical-FinalProject_files/figure-latex/modelProfileLike-1.pdf>]
+<Categorical-FinalProject_files/figure-latex/descriptive-stats-1.pdf, id=227, 7
+22.7pt x 578.16pt>
 File: Categorical-FinalProject_files/figure-latex/descriptive-stats-1.pdf Graph
 ic file (type pdf)
 <use Categorical-FinalProject_files/figure-latex/descriptive-stats-1.pdf>
 Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/descriptiv
-e-stats-1.pdf  used on input line 500.
-(pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
+e-stats-1.pdf  used on input line 612.
+(pdftex.def)             Requested size: 505.88655pt x 404.70924pt.
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 502.
+(amsmath)                 on input line 616.
 
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 525.
-
-
-("C:\Users\MarEichler17\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lm\ts1lmr.f
-d"
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 22.48878pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[8 <./Categorical-FinalProject_files/figure-latex/descriptive-stats-1.pdf>]
-<Categorical-FinalProject_files/figure-latex/hierch-models-1.pdf, id=196, 722.7
-pt x 289.08pt>
-File: Categorical-FinalProject_files/figure-latex/hierch-models-1.pdf Graphic f
-ile (type pdf)
-<use Categorical-FinalProject_files/figure-latex/hierch-models-1.pdf>
+[9pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.626 
+       <./Categorical-FinalProject_files/figure-latex/descriptive-stats-1.pdf>]
+<Categorical-FinalProject_files/figure-latex/hierch-modelsBIC-1.pdf, id=243, 72
+2.7pt x 289.08pt>
+File: Categorical-FinalProject_files/figure-latex/hierch-modelsBIC-1.pdf Graphi
+c file (type pdf)
+<use Categorical-FinalProject_files/figure-latex/hierch-modelsBIC-1.pdf>
 Package pdftex.def Info: Categorical-FinalProject_files/figure-latex/hierch-mod
-els-1.pdf  used on input line 593.
+elsBIC-1.pdf  used on input line 675.
 (pdftex.def)             Requested size: 505.88655pt x 202.35461pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1230,7 +1287,13 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[9] 
+[10pdfTeX warning (ext4): destination with the same identifier (name{table.5}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.677 N
+       ote that these the hierch. models have different estimates ,ranging] 
 AED: lastpage setting LastPage
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1238,33 +1301,33 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[10 <./Categorical-FinalProject_files/figure-latex/hierch-models-1.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 629.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 629.
+[11 <./Categorical-FinalProject_files/figure-latex/hierch-modelsBIC-1.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 698.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 698.
 (Categorical-FinalProject.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 629.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 629.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 698.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 698.
 Package rerunfilecheck Info: File `Categorical-FinalProject.out' has not change
 d.
-(rerunfilecheck)             Checksum: 43EE8803301BE9C52E3089D8923BD07F;2850.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 629.
+(rerunfilecheck)             Checksum: 8508278CAAFD35934B0D8947ED681240;4069.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 698.
  ) 
 Here is how much of TeX's memory you used:
  15181 strings out of 492973
- 229823 string characters out of 3114791
- 349385 words of memory out of 3000000
- 18646 multiletter control sequences out of 15000+200000
- 57507 words of font info for 93 fonts, out of 3000000 for 9000
+ 229916 string characters out of 3114791
+ 354028 words of memory out of 3000000
+ 18628 multiletter control sequences out of 15000+200000
+ 57105 words of font info for 91 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,14n,43p,989b,417s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/l
-m-ts1.enc}{C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dv
-ips/lm/lm-mathsy.enc}{C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/f
-onts/enc/dvips/lm/lm-ec.enc}{C:/Users/MarEichler17/AppData/Local/Programs/MiKTe
-X 2.9/fonts/enc/dvips/lm/lm-mathex.enc} <C:\Users\MarEichler17\AppData\Local\Mi
-KTeX\2.9\fonts\pk\ljfour\public\bbm\dpi600\bbm10.pk>{C:/Users/MarEichler17/AppD
-ata/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/MarEichler
-17/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}<C:/Users
+m-mathsy.enc}{C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/enc
+/dvips/lm/lm-ec.enc}{C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fo
+nts/enc/dvips/lm/lm-mathex.enc} <C:\Users\MarEichler17\AppData\Local\MiKTeX\2.9
+\fonts\pk\ljfour\public\bbm\dpi600\bbm10.pk>{C:/Users/MarEichler17/AppData/Loca
+l/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/MarEichler17/AppDa
+ta/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/MarEich
+ler17/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}<C:/Users
 /MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/l
 m/lmbx12.pfb><C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
@@ -1278,11 +1341,10 @@ sers/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmri1
 0.pfb><C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
 ic/lm/lmri12.pfb><C:/Users/MarEichler17/AppData/Local/Programs/MiKTeX 2.9/fonts
 /type1/public/lm/lmsy10.pfb><C:/Users/MarEichler17/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/lm/lmsy7.pfb><C:/Users/MarEichler17/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Categorical-FinalProject.pdf (10 pages, 978264 bytes).
+X 2.9/fonts/type1/public/lm/lmsy7.pfb>
+Output written on Categorical-FinalProject.pdf (11 pages, 958056 bytes).
 PDF statistics:
- 282 PDF objects out of 1000 (max. 8388607)
- 51 named destinations out of 1000 (max. 500000)
- 10411 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 332 PDF objects out of 1000 (max. 8388607)
+ 76 named destinations out of 1000 (max. 500000)
+ 10467 words of extra memory for PDF output out of 12000 (max. 10000000)
 
