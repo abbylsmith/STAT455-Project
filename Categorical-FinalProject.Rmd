@@ -1,6 +1,6 @@
 ---
 title: "Final Project; Categorical Data Analysis"
-author: "Abby Smith, Miruna B., Martha Eichlersmith"
+author: "Abby Smith, Miruna Baronschi, Martha Eichlersmith"
 date: "11/10/2019"
 output:
   pdf_document:
