@@ -319,6 +319,7 @@ knitr::kable(table.system, format="latex", booktabs=T, caption="Example of Infor
 for_venn <- cap_indicators[,c(16:20)] %>% 
   group_by(security_ind, forensic_ind, judicial_ind, civil_ind) %>%
    summarise(new_Freq = sum(Freq))
+par(mar=c(.1,1,2,1)) #make margins smaller
 dga::venn4(c(2000,for_venn$new_Freq),num.test.points = 100000, main='Overlap of Security, Forensic, Judicial and Civil lists') #rough diagram of overlap
 ```
 
@@ -361,7 +362,10 @@ loglinear_models <- closedp.t(test, dfreq=T)
 NonHierchModels <- loglinear_models$results
 
 #table.logmodels <- as.data.frame(loglinear_models)
-knitr::kable(NonHierchModels, format="latex", booktabs=T, caption="Summary of Models (Non-hierarchical models)") %>% 
+knitr::kable(NonHierchModels
+             , format="latex"
+             , booktabs=T
+             , caption="Summary of Models (Non-hierarchical models)") %>% 
   kableExtra::kable_styling(latex_options="scale_down") %>%
   kableExtra::kable_styling(latex_options = "HOLD_position")
 
@@ -371,12 +375,14 @@ Each model controls for a subset of all the possible interactions among the mode
 
 
 ```{r NOT-HIERCH-models-boxplot, fig.cap="Boxplot of Residuals for Models"}
+par(mar=c(2,1,2,1)) #make margins smaller
 boxplot(loglinear_models) #residuals for heterogen.
 ```
 
 ## Specific Model Results 
 
 ```{r modelProfileLike, fig.cap='Profile Likelihood of Specific Model'}
+par(mar=c(4,4,2,1)) #make margins smaller
 profilelike <- profileCI(test,dfreq=T, m = "Mth", h = "Darroch", a=2) #profile likelihood CI
 ```
 
@@ -431,16 +437,18 @@ knitr::kable(HierchModels, format="latex"
 ```
 
 
+
+
+
+
+
 We also plot the BIC values for different models and their accompanying estimates of $\hat{N}$.  
+
+Note that these the hierch. models have different estimates ,ranging from 5231 to 8607, all within very similar BIC values  Which one should we use?
+
 ```{r hierch-modelsBIC, fig.cap="Hiercharical Models BIC Plot"}
 plot(hierch_models) #BIC for a bunch of different models 
 ```
-
-
-
-
-
-Note that these the hierch. models have different estimates ,ranging from 5231 to 8607, all within very similar BIC values  Which one should we use?
 
 This is the fundamental problem of the frequentist approach. We could just pick the “best” model, i.e., the one with the lowest BIC. Unfortunately, just picking one model ignores the error that we introduce by the selection itself. It also forces us to decide which dependencies among the systems we will control for, forcing us to decide which dependencies will not be included in the model.
 
