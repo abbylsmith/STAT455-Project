@@ -1,0 +1,2 @@
+"0","par(mar=c(2,1,2,1)) #make margins smaller"
+"0","boxplot(loglinear_models) #residuals for heterogen."

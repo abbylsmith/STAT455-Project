@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1575400961441.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "2B368BE4",
+    "lastKnownWriteTime" : 1575401045,
+    "last_content_update" : 1575401045138,
+    "path" : "~/MYE-Documents/SCHOOL/Northwestern/Courses/STAT455/Project/STAT455-Project/Categorical-FinalProject.Rmd",
+    "project_path" : "Categorical-FinalProject.Rmd",
+    "properties" : {
+        "cursorPosition" : "19,19",
+        "last_setup_crc32" : "DCEE928426e2ba39",
+        "scrollLine" : "12"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

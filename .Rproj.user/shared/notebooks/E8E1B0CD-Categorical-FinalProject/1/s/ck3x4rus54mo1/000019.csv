@@ -1,0 +1,5 @@
+"0","for_venn <- cap_indicators[,c(16:20)] %>% "
+"0","  group_by(security_ind, forensic_ind, judicial_ind, civil_ind) %>%"
+"0","   summarise(new_Freq = sum(Freq))"
+"0","par(mar=c(.1,1,2,1)) #make margins smaller"
+"0","dga::venn4(c(2000,for_venn$new_Freq),num.test.points = 100000, main='Overlap of Security, Forensic, Judicial and Civil lists') #rough diagram of overlap"
