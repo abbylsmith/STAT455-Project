@@ -20,8 +20,9 @@ header-includes:
 - \pagestyle{fancy}
 - \floatplacement{figure}{H}
 - \fancyhf{}
-- \fancyhead[LE,LO]{STAT 455 Fall 2019 \\ Final Project}
-- \fancyhead[RE,RO]{Abby, Miruna, Martha \\ Page \thepage\ of\ \pageref*{LastPage}}
+- \fancyhead[L]{STAT 455 Fall 2019 \\ Final Project}
+- \fancyhead[R]{Abby, Miruna, Martha \\ Page \thepage\ of\ \pageref*{LastPage}}
+- \setlength{\headheight}{22.5pt} #to remove \fancyhead error for head height
 geometry: left=0.75in,right=0.75in,top=1.1in,bottom=1in
 ---
 
