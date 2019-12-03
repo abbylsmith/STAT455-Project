@@ -2,7 +2,7 @@
 title: "Final Project; Categorical Data Analysis"
 author: "Abby Smith, Miruna B., Martha Eichlersmith"
 date: "11/10/2019"
-output: 
+output:
   pdf_document:
     fig_caption: yes
     number_sections: yes
